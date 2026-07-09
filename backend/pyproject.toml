@@ -50,6 +50,13 @@ strict = true
 ignore_missing_imports = true
 plugins = ["pydantic.mypy"]
 
+# LangGraph's StateGraph/CompiledStateGraph carry many generic parameters whose
+# typed overloads don't accept plain node closures cleanly. The wiring is
+# exercised by integration tests, so relax only these two codes for this module.
+[[tool.mypy.overrides]]
+module = "app.agent.graph"
+disable_error_code = ["type-arg", "call-overload"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
