@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS sessions (
   current_concept  TEXT,
   running_summary  TEXT DEFAULT '',
   phase            TEXT DEFAULT 'teach',            -- teach | quiz | review
+  state            JSONB DEFAULT '{}'::jsonb,       -- bounded AgentState snapshot
   created_at       TIMESTAMPTZ DEFAULT now(),
   updated_at       TIMESTAMPTZ DEFAULT now()
 );

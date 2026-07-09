@@ -96,6 +96,7 @@ class LearningSession(Base):
     current_concept: Mapped[str | None] = mapped_column(String)
     running_summary: Mapped[str] = mapped_column(Text, default="")
     phase: Mapped[str] = mapped_column(String, default="teach")
+    state: Mapped[dict[str, object]] = mapped_column(JSONB, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()

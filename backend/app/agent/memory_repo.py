@@ -76,3 +76,14 @@ class InMemoryRepo(Repo):
                 "misconception": misconception,
             }
         )
+
+    # --- read helpers (dashboard / progress) ---
+    def concepts(self, topic: str) -> list[ConceptRef]:
+        return [_to_ref(c) for c in TOPICS.get(topic, [])]
+
+    def attempt_history(
+        self, user_id: str, limit: int, offset: int
+    ) -> list[dict[str, object]]:
+        """Most-recent-first page of this user's attempts. O(n) in-memory."""
+        mine = [a for a in self.attempts if a["user_id"] == user_id]
+        return list(reversed(mine))[offset : offset + limit]
