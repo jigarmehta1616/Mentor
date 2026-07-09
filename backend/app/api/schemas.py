@@ -15,3 +15,5 @@ class StartSessionRequest(BaseModel):
 
 class TurnRequest(BaseModel):
     answer: str | None = None
+    # Optional on-demand level switch; re-teaches the current concept at this level.
+    level: ExplainLevel | None = None

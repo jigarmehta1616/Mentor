@@ -32,7 +32,7 @@ def turn(session_id: str, req: TurnRequest) -> StreamingResponse:
     """Drive one agent step, streaming the explanation then a final view (SSE)."""
     engine = get_engine()
     try:
-        state = engine.turn(session_id, req.answer)
+        state = engine.turn(session_id, req.answer, req.level)
     except KeyError as exc:
         raise HTTPException(status_code=404, detail="session not found") from exc
 

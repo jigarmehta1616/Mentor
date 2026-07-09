@@ -84,11 +84,19 @@ class Engine:
         self.store.put(session_id, final)
         return session_id, final
 
-    def turn(self, session_id: str, answer: str | None) -> AgentState:
-        """Advance a session one step (grade/adapt then present the next concept)."""
+    def turn(
+        self, session_id: str, answer: str | None, level: ExplainLevel | None = None
+    ) -> AgentState:
+        """Advance a session one step (grade/adapt then present the next concept).
+
+        Passing ``level`` with no answer re-teaches the current concept at that
+        depth (the on-demand level switch).
+        """
         state = self.store.get(session_id)
         if state is None:
             raise KeyError(session_id)
+        if level is not None:
+            state["explain_level"] = level
         state["answer"] = answer
         final = cast(AgentState, dict(self.graph.invoke(state)))
         self.store.put(session_id, final)
