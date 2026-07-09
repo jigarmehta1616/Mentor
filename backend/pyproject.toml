@@ -40,6 +40,10 @@ target-version = "py311"
 select = ["E", "F", "I", "UP", "B"]
 ignore = ["B008"]  # FastAPI Depends() in defaults is idiomatic
 
+[tool.ruff.lint.per-file-ignores]
+# The seed concept table reads better as aligned wide rows.
+"app/seed/concepts.py" = ["E501"]
+
 [tool.mypy]
 python_version = "3.11"
 strict = true
@@ -49,4 +53,5 @@ plugins = ["pydantic.mypy"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 addopts = "-q"
